@@ -121,6 +121,46 @@
     font-size: 0.8rem;
     color: var(--muted);
   }
+
+  .countdown-section {
+    margin: 1.75rem 0;
+    padding: 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .countdown-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 56px;
+  }
+
+  .countdown-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .countdown-unit {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
 </style>
 </head>
 <body>
@@ -141,12 +181,69 @@
       <span class="tag">📚 Lezen</span>
     </div>
 
+    <div class="countdown-section">
+      <p class="countdown-label">Aftellen tot de start van de universiteit</p>
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <span class="countdown-value" id="cd-days">--</span>
+          <span class="countdown-unit">dagen</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value" id="cd-hours">--</span>
+          <span class="countdown-unit">uur</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value" id="cd-minutes">--</span>
+          <span class="countdown-unit">min</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-value" id="cd-seconds">--</span>
+          <span class="countdown-unit">sec</span>
+        </div>
+      </div>
+    </div>
+
     <div class="links">
       <a href="https://www.instagram.com/jens_rms/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
 
     <footer>&copy; 2026 Jens</footer>
   </div>
+
+  <script>
+    const targetDate = new Date("2026-09-07T00:00:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      const daysEl = document.getElementById("cd-days");
+      const hoursEl = document.getElementById("cd-hours");
+      const minutesEl = document.getElementById("cd-minutes");
+      const secondsEl = document.getElementById("cd-seconds");
+
+      if (diff <= 0) {
+        daysEl.textContent = "0";
+        hoursEl.textContent = "0";
+        minutesEl.textContent = "0";
+        secondsEl.textContent = "0";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      daysEl.textContent = days;
+      hoursEl.textContent = hours;
+      minutesEl.textContent = minutes;
+      secondsEl.textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 
 </body>
 </html>
