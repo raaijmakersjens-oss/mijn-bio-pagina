@@ -333,6 +333,61 @@
     display: block;
     margin-top: 0.25rem;
   }
+
+  .feyenoord-section {
+    margin: 1.75rem 0;
+    padding: 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: left;
+  }
+
+  .feyenoord-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 0.75rem;
+    text-align: center;
+  }
+
+  .feyenoord-block + .feyenoord-block {
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .feyenoord-block-title {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.4rem;
+  }
+
+  .feyenoord-match {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .feyenoord-teams {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .feyenoord-score {
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .feyenoord-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0.25rem 0 0;
+  }
 </style>
 </head>
 <body>
@@ -391,6 +446,13 @@
         <span class="weather-desc">Laden...</span>
       </div>
       <div class="forecast-row" id="forecast-row"></div>
+    </div>
+
+    <div class="feyenoord-section">
+      <p class="feyenoord-label">⚽ Feyenoord</p>
+      <div id="feyenoord-content">
+        <p class="feyenoord-meta" style="text-align:center;">Laden...</p>
+      </div>
     </div>
 
     <div class="links">
@@ -558,6 +620,67 @@
     }
 
     loadWeather();
+
+    function formatMatchDate(isoString) {
+      const date = new Date(isoString);
+      return date.toLocaleDateString("nl-NL", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      }) + " · " + date.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function renderUpcoming(match) {
+      if (!match) {
+        return '<p class="feyenoord-meta">Geen aankomende wedstrijd gevonden.</p>';
+      }
+      const isHome = match.homeTeam === "Feyenoord Rotterdam";
+      const opponent = isHome ? match.awayTeam : match.homeTeam;
+      const thuisUit = isHome ? "thuis" : "uit";
+      return `
+        <div class="feyenoord-match">
+          <span class="feyenoord-teams">Feyenoord – ${opponent} (${thuisUit})</span>
+        </div>
+        <p class="feyenoord-meta">${formatMatchDate(match.utcDate)} · ${match.competition}</p>
+      `;
+    }
+
+    function renderLastResult(match) {
+      if (!match) {
+        return "";
+      }
+      return `
+        <div class="feyenoord-block">
+          <p class="feyenoord-block-title">Laatste uitslag</p>
+          <div class="feyenoord-match">
+            <span class="feyenoord-teams">${match.homeTeam} – ${match.awayTeam}</span>
+            <span class="feyenoord-score">${match.homeScore} - ${match.awayScore}</span>
+          </div>
+          <p class="feyenoord-meta">${formatMatchDate(match.utcDate)} · ${match.competition}</p>
+        </div>
+      `;
+    }
+
+    async function loadFeyenoord() {
+      const content = document.getElementById("feyenoord-content");
+
+      try {
+        const response = await fetch("feyenoord.json");
+        if (!response.ok) {
+          throw new Error(`kon feyenoord.json niet laden (${response.status})`);
+        }
+
+        const data = await response.json();
+
+        content.innerHTML =
+          `<div class="feyenoord-block">${renderUpcoming(data.upcoming)}</div>` +
+          renderLastResult(data.lastResult);
+      } catch (error) {
+        content.innerHTML = `<p class="feyenoord-meta" style="text-align:center;">Feyenoord-data kon niet worden geladen (${error.message}).</p>`;
+      }
+    }
+
+    loadFeyenoord();
   </script>
 
 </body>
