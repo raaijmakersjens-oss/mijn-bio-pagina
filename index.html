@@ -14,6 +14,15 @@
     --border: #e6e2db;
   }
 
+  :root[data-theme="dark"] {
+    --bg: #1a1c19;
+    --card: #24261f;
+    --text: #ececec;
+    --muted: #a0a0a0;
+    --accent: #7fa287;
+    --border: #383a33;
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -28,9 +37,13 @@
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     padding: 2rem 1rem;
+    transition: background 0.2s ease, color 0.2s ease;
+    position: relative;
+    overflow-x: hidden;
   }
 
   .card {
+    position: relative;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -39,6 +52,41 @@
     width: 100%;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    z-index: 1;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    animation: fadeInUp 0.6s ease;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.08);
   }
 
   .avatar {
@@ -93,6 +141,19 @@
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
     font-size: 0.85rem;
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+
+  .tag:hover {
+    transform: translateY(-2px);
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .about-text {
+    text-align: left;
+    color: var(--muted);
   }
 
   .links {
@@ -161,11 +222,125 @@
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
+
+  .countdown-extra {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0.75rem 0 0;
+  }
+
+  .weather-section {
+    margin: 1.75rem 0;
+    padding: 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .weather-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .weather-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .weather-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .weather-icon {
+    font-size: 1.8rem;
+  }
+
+  .weather-temp {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .weather-desc {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .weather-details {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .forecast-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .forecast-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .forecast-day .forecast-icon {
+    font-size: 1.1rem;
+  }
+
+  .forecast-day .forecast-max {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .weather-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .raindrop {
+    position: absolute;
+    top: -10%;
+    width: 2px;
+    height: 14px;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+    opacity: 0.4;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(120vh);
+    }
+  }
+
+  #last-updated {
+    display: block;
+    margin-top: 0.25rem;
+  }
 </style>
 </head>
 <body>
 
+  <div class="weather-overlay" id="weather-overlay"></div>
+
   <div class="card">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Wissel thema">🌙</button>
     <div class="avatar">J</div>
     <h1>Jens</h1>
     <p class="subtitle">19 jaar</p>
@@ -173,6 +348,12 @@
     <p class="info">
       Ik start op <strong>7 september</strong> met de studie <strong>PPE</strong>
       aan de <strong>Universiteit Utrecht</strong>.
+    </p>
+
+    <p class="info about-text">
+      Als ik niet aan het studeren ben, sta ik in de sportschool, kijk ik voetbal
+      of zit ik met mijn neus in een boek. Deze zomer telt elke dag tot de start
+      in Utrecht.
     </p>
 
     <div class="tags">
@@ -201,16 +382,46 @@
           <span class="countdown-unit">sec</span>
         </div>
       </div>
+      <p class="countdown-extra" id="cd-weeks"></p>
+    </div>
+
+    <div class="weather-section">
+      <p class="weather-label">Actueel weer in Utrecht</p>
+      <div class="weather-content" id="weather-content">
+        <span class="weather-desc">Laden...</span>
+      </div>
+      <div class="forecast-row" id="forecast-row"></div>
     </div>
 
     <div class="links">
       <a href="https://www.instagram.com/jens_rms/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="mailto:raaijmakersjens@gmail.com">✉️ E-mail</a>
     </div>
 
-    <footer>&copy; 2026 Jens</footer>
+    <footer>&copy; 2026 Jens<span id="last-updated"></span></footer>
   </div>
 
   <script>
+    const themeToggle = document.getElementById("theme-toggle");
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(savedTheme || (systemPrefersDark ? "dark" : "light"));
+
+    themeToggle.addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      localStorage.setItem("theme", next);
+    });
+
+    document.getElementById("last-updated").textContent =
+      " · bijgewerkt " + new Date(document.lastModified).toLocaleDateString("nl-NL");
+
     const targetDate = new Date("2026-09-07T00:00:00");
 
     function updateCountdown() {
@@ -221,12 +432,14 @@
       const hoursEl = document.getElementById("cd-hours");
       const minutesEl = document.getElementById("cd-minutes");
       const secondsEl = document.getElementById("cd-seconds");
+      const weeksEl = document.getElementById("cd-weeks");
 
       if (diff <= 0) {
         daysEl.textContent = "0";
         hoursEl.textContent = "0";
         minutesEl.textContent = "0";
         secondsEl.textContent = "0";
+        weeksEl.textContent = "";
         return;
       }
 
@@ -239,10 +452,112 @@
       hoursEl.textContent = hours;
       minutesEl.textContent = minutes;
       secondsEl.textContent = seconds;
+
+      const weeks = Math.floor(days / 7);
+      const remDays = days % 7;
+      weeksEl.textContent = `Dat is ongeveer ${weeks} weken en ${remDays} dagen`;
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    const weatherCodes = {
+      0: [["☀️", "🌕"], "Onbewolkt"],
+      1: [["🌤️", "🌤️"], "Overwegend zonnig"],
+      2: [["⛅", "☁️"], "Half bewolkt"],
+      3: [["☁️", "☁️"], "Bewolkt"],
+      45: [["🌫️", "🌫️"], "Mistig"],
+      48: [["🌫️", "🌫️"], "Rijp en mist"],
+      51: [["🌦️", "🌧️"], "Lichte motregen"],
+      53: [["🌦️", "🌧️"], "Motregen"],
+      55: [["🌦️", "🌧️"], "Zware motregen"],
+      61: [["🌧️", "🌧️"], "Lichte regen"],
+      63: [["🌧️", "🌧️"], "Regen"],
+      65: [["🌧️", "🌧️"], "Zware regen"],
+      71: [["🌨️", "🌨️"], "Lichte sneeuw"],
+      73: [["🌨️", "🌨️"], "Sneeuw"],
+      75: [["🌨️", "🌨️"], "Zware sneeuw"],
+      80: [["🌦️", "🌧️"], "Regenbuien"],
+      81: [["🌧️", "🌧️"], "Zware regenbuien"],
+      82: [["⛈️", "⛈️"], "Hevige regenbuien"],
+      95: [["⛈️", "⛈️"], "Onweer"],
+      96: [["⛈️", "⛈️"], "Onweer met hagel"],
+      99: [["⛈️", "⛈️"], "Zwaar onweer met hagel"],
+    };
+
+    const rainyCodes = new Set([51, 53, 55, 61, 63, 65, 80, 81, 82, 95, 96, 99]);
+
+    function showRainOverlay() {
+      const overlay = document.getElementById("weather-overlay");
+      overlay.innerHTML = "";
+      const dropCount = 40;
+      for (let i = 0; i < dropCount; i++) {
+        const drop = document.createElement("div");
+        drop.className = "raindrop";
+        drop.style.left = Math.random() * 100 + "vw";
+        drop.style.animationDuration = 0.6 + Math.random() * 0.6 + "s";
+        drop.style.animationDelay = Math.random() * 2 + "s";
+        overlay.appendChild(drop);
+      }
+    }
+
+    async function loadWeather() {
+      const content = document.getElementById("weather-content");
+      const forecastRow = document.getElementById("forecast-row");
+      try {
+        const response = await fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=52.09&longitude=5.12" +
+            "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day" +
+            "&daily=weather_code,temperature_2m_max,temperature_2m_min" +
+            "&timezone=Europe%2FAmsterdam&forecast_days=5"
+        );
+        const data = await response.json();
+
+        const temp = Math.round(data.current.temperature_2m);
+        const feelsLike = Math.round(data.current.apparent_temperature);
+        const wind = Math.round(data.current.wind_speed_10m);
+        const code = data.current.weather_code;
+        const isDay = data.current.is_day === 1;
+        const [icons, description] = weatherCodes[code] || [["🌡️", "🌡️"], "Onbekend"];
+        const icon = isDay ? icons[0] : icons[1];
+
+        content.innerHTML = `
+          <div class="weather-main">
+            <span class="weather-icon">${icon}</span>
+            <span class="weather-temp">${temp}°C</span>
+            <span class="weather-desc">${description}</span>
+          </div>
+          <span class="weather-details">Voelt als ${feelsLike}°C · wind ${wind} km/u</span>
+        `;
+
+        const dayNames = ["Zo", "Ma", "Di", "Wo", "Do", "Vr", "Za"];
+        forecastRow.innerHTML = data.daily.time
+          .map((dateStr, i) => {
+            const dayCode = data.daily.weather_code[i];
+            const [dayIcons] = weatherCodes[dayCode] || [["🌡️", "🌡️"]];
+            const max = Math.round(data.daily.temperature_2m_max[i]);
+            const min = Math.round(data.daily.temperature_2m_min[i]);
+            const label = i === 0 ? "Nu" : dayNames[new Date(dateStr).getDay()];
+            return `
+              <div class="forecast-day">
+                <span>${label}</span>
+                <span class="forecast-icon">${dayIcons[0]}</span>
+                <span class="forecast-max">${max}°</span>
+                <span>${min}°</span>
+              </div>
+            `;
+          })
+          .join("");
+
+        if (rainyCodes.has(code)) {
+          showRainOverlay();
+        }
+      } catch (error) {
+        content.innerHTML = '<span class="weather-desc">Weer kon niet worden geladen</span>';
+      }
+    }
+
+    loadWeather();
   </script>
 
 </body>
