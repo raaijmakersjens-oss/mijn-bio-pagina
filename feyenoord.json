@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-08-23T06:39:00.903Z",
+  "updatedAt": "2026-08-24T06:56:08.460Z",
   "teamId": 675,
   "upcoming": {
+    "utcDate": "2026-08-30T12:30:00Z",
+    "competition": "Eredivisie",
+    "homeTeam": "Feyenoord Rotterdam",
+    "awayTeam": "ADO Den Haag",
+    "homeTeamId": 675
+  },
+  "lastResult": {
     "utcDate": "2026-08-23T14:45:00Z",
     "competition": "Eredivisie",
     "homeTeam": "SC Cambuur-Leeuwarden",
     "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 1909
-  },
-  "lastResult": {
-    "utcDate": "2026-08-16T12:30:00Z",
-    "competition": "Eredivisie",
-    "homeTeam": "Feyenoord Rotterdam",
-    "awayTeam": "Go Ahead Eagles",
-    "homeTeamId": 675,
+    "homeTeamId": 1909,
     "homeScore": 2,
-    "awayScore": 2
+    "awayScore": 5
   }
 }
