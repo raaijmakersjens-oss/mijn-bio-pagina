@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-09-05T10:00:04.516Z",
+  "updatedAt": "2026-09-06T10:19:35.591Z",
   "teamId": 675,
   "upcoming": {
+    "utcDate": "2026-09-09T16:45:00Z",
+    "competition": "UEFA Champions League",
+    "homeTeam": "FC Barcelona",
+    "awayTeam": "Feyenoord Rotterdam",
+    "homeTeamId": 81
+  },
+  "lastResult": {
     "utcDate": "2026-09-05T14:30:00Z",
     "competition": "Eredivisie",
     "homeTeam": "NEC",
     "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 1915
-  },
-  "lastResult": {
-    "utcDate": "2026-08-30T12:30:00Z",
-    "competition": "Eredivisie",
-    "homeTeam": "Feyenoord Rotterdam",
-    "awayTeam": "ADO Den Haag",
-    "homeTeamId": 675,
-    "homeScore": 2,
-    "awayScore": 2
+    "homeTeamId": 1915,
+    "homeScore": 1,
+    "awayScore": 3
   }
 }
