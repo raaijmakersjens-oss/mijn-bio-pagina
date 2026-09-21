@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T10:41:43.657Z",
+  "updatedAt": "2026-09-21T12:05:10.991Z",
   "teamId": 675,
   "upcoming": {
     "utcDate": "2026-10-10T16:45:00Z",
@@ -9,12 +9,12 @@
     "homeTeamId": 675
   },
   "lastResult": {
-    "utcDate": "2026-09-13T14:45:00Z",
+    "utcDate": "2026-09-20T10:15:00Z",
     "competition": "Eredivisie",
-    "homeTeam": "PEC Zwolle",
-    "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 684,
-    "homeScore": 0,
-    "awayScore": 7
+    "homeTeam": "Feyenoord Rotterdam",
+    "awayTeam": "FC Utrecht",
+    "homeTeamId": 675,
+    "homeScore": 5,
+    "awayScore": 0
   }
 }
