@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-10-25T10:47:59.878Z",
+  "updatedAt": "2026-10-26T12:18:52.403Z",
   "teamId": 675,
   "upcoming": {
+    "utcDate": "2026-10-31T15:30:00Z",
+    "competition": "Eredivisie",
+    "homeTeam": "Feyenoord Rotterdam",
+    "awayTeam": "Fortuna Sittard",
+    "homeTeamId": 675
+  },
+  "lastResult": {
     "utcDate": "2026-10-25T13:30:00Z",
     "competition": "Eredivisie",
     "homeTeam": "PSV",
     "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 674
-  },
-  "lastResult": {
-    "utcDate": "2026-10-21T19:00:00Z",
-    "competition": "UEFA Champions League",
-    "homeTeam": "Real Betis Balompié",
-    "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 90,
+    "homeTeamId": 674,
     "homeScore": 1,
-    "awayScore": 0
+    "awayScore": 1
   }
 }
