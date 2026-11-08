@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-07T12:30:56.831Z",
+  "updatedAt": "2026-11-08T12:49:02.291Z",
   "teamId": 675,
   "upcoming": {
-    "utcDate": "2026-11-08T11:15:00Z",
+    "utcDate": "2026-11-21T17:45:00Z",
     "competition": "Eredivisie",
-    "homeTeam": "SC Heerenveen",
-    "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 673
+    "homeTeam": "Feyenoord Rotterdam",
+    "awayTeam": "SBV Excelsior",
+    "homeTeamId": 675
   },
   "lastResult": {
     "utcDate": "2026-11-03T20:00:00Z",
