@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T12:49:02.291Z",
+  "updatedAt": "2026-11-09T15:17:15.344Z",
   "teamId": 675,
   "upcoming": {
     "utcDate": "2026-11-21T17:45:00Z",
@@ -9,12 +9,12 @@
     "homeTeamId": 675
   },
   "lastResult": {
-    "utcDate": "2026-11-03T20:00:00Z",
-    "competition": "UEFA Champions League",
-    "homeTeam": "Feyenoord Rotterdam",
-    "awayTeam": "FC Internazionale Milano",
-    "homeTeamId": 675,
-    "homeScore": 0,
+    "utcDate": "2026-11-08T11:15:00Z",
+    "competition": "Eredivisie",
+    "homeTeam": "SC Heerenveen",
+    "awayTeam": "Feyenoord Rotterdam",
+    "homeTeamId": 673,
+    "homeScore": 5,
     "awayScore": 3
   }
 }
