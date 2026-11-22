@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-11-21T14:15:54.642Z",
+  "updatedAt": "2026-11-22T14:06:20.112Z",
   "teamId": 675,
   "upcoming": {
+    "utcDate": "2026-11-24T20:00:00Z",
+    "competition": "UEFA Champions League",
+    "homeTeam": "Feyenoord Rotterdam",
+    "awayTeam": "FC Porto",
+    "homeTeamId": 675
+  },
+  "lastResult": {
     "utcDate": "2026-11-21T17:45:00Z",
     "competition": "Eredivisie",
     "homeTeam": "Feyenoord Rotterdam",
     "awayTeam": "SBV Excelsior",
-    "homeTeamId": 675
-  },
-  "lastResult": {
-    "utcDate": "2026-11-08T11:15:00Z",
-    "competition": "Eredivisie",
-    "homeTeam": "SC Heerenveen",
-    "awayTeam": "Feyenoord Rotterdam",
-    "homeTeamId": 673,
-    "homeScore": 5,
+    "homeTeamId": 675,
+    "homeScore": 2,
     "awayScore": 3
   }
 }
